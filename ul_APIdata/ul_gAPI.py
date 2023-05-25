@@ -115,55 +115,55 @@ while True:
     if event ==" Cultural ":
         print('\n> Cultural Search Selected: Cultural Center, Museum, Art Gallery, Lecture Hall')
         searchInputGeneric2 = ('Cultural Center, Museum, Art Gallery, Lecture Hall')
-        intin_Keywords= searchInputGeneric2
-        sg.popup('You Changed the Search for Cultural:\n > Keywords:    %s'%(intin_Keywords))
-        intin_Keywords_formated=string2List(intin_Keywords)
-        print("> Length List Keyword Values: %s"%(str(len(intin_Keywords_formated))))
+        i_input_Keywords= searchInputGeneric2
+        sg.popup('You Changed the Search for Cultural:\n > Keywords:    %s'%(i_input_Keywords))
+        i_input_Keywords_formated=string2List(i_input_Keywords)
+        print("> Length List Keyword Values: %s"%(str(len(i_input_Keywords_formated))))
 
     elif event ==" Fitness ":
         print('\n> Fitness Search Selected: Gym, Climbing, Fitness, Spa, Swiming, Sport, Stadium, Arena')
         searchInputGeneric3 = ('Gym, Climbing, Fitness, Spa, Swiming, Sport, Stadium, Arena')
-        intin_Keywords= searchInputGeneric3
-        sg.popup('You Changed to a Fitness Search:\n > Keywords:    %s'%(intin_Keywords))
-        intin_Keywords_formated=string2List(intin_Keywords)
-        print("> Length List Keyword Values: %s"%(str(len(intin_Keywords_formated))))
+        i_input_Keywords= searchInputGeneric3
+        sg.popup('You Changed to a Fitness Search:\n > Keywords:    %s'%(i_input_Keywords))
+        i_input_Keywords_formated=string2List(i_input_Keywords)
+        print("> Length List Keyword Values: %s"%(str(len(i_input_Keywords_formated))))
 
     elif event ==" Lodging ":
         print('\n> Lodging Search Selected: Hotels, Hostel, Resort, Lodging, B&B')
         searchInputGeneric4 = ('Hotels, Hostel, Resort, Lodging, B&B')
-        intin_Keywords= searchInputGeneric4
-        sg.popup('You Changed to a Lodging Search:\n > Keywords:    %s'%(intin_Keywords))
-        intin_Keywords_formated=string2List(intin_Keywords)
-        print("> Length List Keyword Values: %s"%(str(len(intin_Keywords_formated))))
+        i_input_Keywords= searchInputGeneric4
+        sg.popup('You Changed to a Lodging Search:\n > Keywords:    %s'%(i_input_Keywords))
+        i_input_Keywords_formated=string2List(i_input_Keywords)
+        print("> Length List Keyword Values: %s"%(str(len(i_input_Keywords_formated))))
 
     elif event ==" Food&Beverage ":
         print('\n> Food and Beverage Search Selected: Restaurant, Bar, Food, Brewery, Dining')
         searchInputGeneric4 = ('Restaurant, Bar, Food, Brewery, Dining')
-        intin_Keywords= searchInputGeneric4
-        sg.popup('You Changed to a Food & Bev Search:\n > Keywords:    %s'%(intin_Keywords))
-        intin_Keywords_formated=string2List(intin_Keywords)
-        print("> Length List Keyword Values: %s"%(str(len(intin_Keywords_formated))))
+        i_input_Keywords= searchInputGeneric4
+        sg.popup('You Changed to a Food & Bev Search:\n > Keywords:    %s'%(i_input_Keywords))
+        i_input_Keywords_formated=string2List(i_input_Keywords)
+        print("> Length List Keyword Values: %s"%(str(len(i_input_Keywords_formated))))
 
     elif event ==" Entertainment ":
         print('\n> Entertainment Search Selected: Theatre, Entertainment, Show, Cinema,Concert Hall, Music Venue')
         searchInputGeneric5 = ('Theatre, Entertainment, Show, Cinema,Concert Hall, Music Venue')
-        intin_Keywords= searchInputGeneric5
-        sg.popup('You Changed to a Entertainment Search:\n > Keywords:    %s'%(intin_Keywords))
-        intin_Keywords_formated=string2List(intin_Keywords)
-        print("> Length List Keyword Values: %s"%(str(len(intin_Keywords_formated))))
+        i_input_Keywords= searchInputGeneric5
+        sg.popup('You Changed to a Entertainment Search:\n > Keywords:    %s'%(i_input_Keywords))
+        i_input_Keywords_formated=string2List(i_input_Keywords)
+        print("> Length List Keyword Values: %s"%(str(len(i_input_Keywords_formated))))
 
     elif event ==" Custom Search ":
         print('\n> CustomSearch Selected: %s' % values[2])
-        intin_Keywords= values[2]
-        sg.popup('You Changed the Search for Cultural:\n > Keywords:    %s'%(intin_Keywords))
-        intin_Keywords_formated=string2List(intin_Keywords)
-        print("> Length List Keyword Values: %s"%(str(len(intin_Keywords_formated))))
+        i_input_Keywords= values[2]
+        sg.popup('You Changed the Search for Cultural:\n > Keywords:    %s'%(i_input_Keywords))
+        i_input_Keywords_formated=string2List(i_input_Keywords)
+        print("> Length List Keyword Values: %s"%(str(len(i_input_Keywords_formated))))
 
     #Getting the values directly from the interface
-    intin_location  =values[0]  # location given in Geocoordinates
-    intin_Radius    =values[1]  # radius given in meters
-    intin_Mode = values[3]      # Route mode, it would have to be one of ['walking','driving','bicycling','transit']
-    intin_FolderDirectory= values["-FOLDER-"] # the file directory where the json files will be saved
+    i_input_location  =values[0]  # location given in Geocoordinates
+    i_input_Radius    =values[1]  # radius given in meters
+    i_input_Mode = values[3]      # Route mode, it would have to be one of ['walking','driving','bicycling','transit']
+    i_input_FolderDirectory= values["-FOLDER-"] # the file directory where the json files will be saved
  
 
     #End program if user close window or presses the OK button
@@ -172,7 +172,7 @@ while True:
 
     # RUN THE SCRIPT #    
     if event=="RUN SCRIPT":
-        if 'intin_Keywords_formated' not in globals() :
+        if 'i_input_Keywords_formated' not in globals() :
             sg.popup('You have forgotten to input Keywords for Search!')
         else:
             print("_____________________________________________________________________")
@@ -183,7 +183,7 @@ while True:
             ## GOOGLE MAPS API REQUEST ############################################################################################################################################
             #########################################################################################################################################################
 
-            # REQUEST TYPES ###
+            # REQUEST TYPES ###############################################################################
             GOOGLE_MAPS_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json'
             GOOGLE_MAPS_API_URL_DIR = 'https://maps.googleapis.com/maps/api/directions/json'
             GOOGLE_PLACES_DET='https://maps.googleapis.com/maps/api/place/details/json'
@@ -191,8 +191,8 @@ while True:
             GOOGLE_PLACES_API2="https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
             GOOGLE_ELEVATION_API = 'https://maps.googleapis.com/maps/api/elevation/json'
             
-            # API KEY ### Reads the API key from an external file stored in the computer, when using the code, 'dirAPIkey' should be replaced
-            
+            # API KEY #####################################################################################
+            # Reads the API key from an external file stored in the computer, when using the code, 'dirAPIkey' should be replaced
             with open(dirAPIkey, 'r') as file:
                 GOOGLE_API_KEY = file.read().strip()
             
@@ -202,47 +202,48 @@ while True:
             print("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n>>>>>> GATHER LOCATIONS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
             # DEFINING PARAMETERS
             GOOGLE_API_SEARCH=GOOGLE_PLACES_API
-            R00_loc = intin_location
-            print('> Coordinates: %s' % R00_loc)
-            #break
-            R00_radius = intin_Radius
-            R00_keyword=intin_Keywords_formated
-            R00_locbias='circle:%s@%s'%(R00_radius,R00_loc)
-            R99_results = []  # This is the final List adding all the pages results
-            GAPIRESULTS='results'
 
-            finalList = []
+            r_loc_geolocation = i_input_location
+            r_loc_radius = i_input_Radius
+            r_loc_keywords=i_input_Keywords_formated
+            r_loc_results_raw = []  # This is the final List adding all the pages results
+            r_loc_results_r='results' # this is just a way to get faster to the results since the api responds with two main keys, one being 'results'
+            print('> Coordinates: %s | Radius: %s ' % (r_loc_geolocation,r_loc_radius))
+
+            r_loc_finalList = []
 
             #Lists for Eliminating Duplicate Entries
-            finalListDups =[]
-            final4dupsTestLis=[]
+            r_loc_finalListDups =[]
+            r_loc_final4dupsTestLis=[]
 
-            nAb=''
-            for i,item in enumerate(R00_keyword):
+
+            # Formating the appendix for file naming
+            f_appendix_keywords=''
+            for i,item in enumerate(r_loc_keywords):
                 if i>0:
-                    nAb=nAb+'-'+item
+                    f_appendix_keywords=f_appendix_keywords+'-'+item
                 else:
-                    nAb=item
+                    f_appendix_keywords=item
 
-            nameAppendix = '%s_%sm' % (nAb, R00_radius)
-            print('> File Name: %s'%(nameAppendix))
+            f_finalNameAppendix = '%s_%sm' % (f_appendix_keywords, r_loc_radius)
+            print('> File Name: %s'%f_finalNameAppendix)
 
             print('\n> INITIATE LOCATION GATHER: \n')
-            for k in range(len(R00_keyword)):
-                #print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-                #print('> SEARCH KEYWORD: %s' % (R00_keyword[k]))
-                #print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-                R00_parameters = {
+            for k in range(len(r_loc_keywords)):
+                #####################################################################
+                #### SEARCH KEYWORDS ################################################
+                #####################################################################
+                r_loc_parameters = {
                     'key': GOOGLE_API_KEY,
-                    'location': R00_loc,
-                    'radius': R00_radius,
-                    'keyword': R00_keyword[k]
+                    'location': r_loc_geolocation,
+                    'radius': r_loc_radius,
+                    'keyword': r_loc_keywords[k]
                 }
 
-                R00_request = requests.get(GOOGLE_API_SEARCH, params=R00_parameters)
-                R00_result = R00_request.json()
+                r_loc_request = requests.get(GOOGLE_API_SEARCH, params=r_loc_parameters)
+                r_loc_request_in = r_loc_request.json()
                
-                R99_results = R00_result[GAPIRESULTS]
+                r_loc_results_raw = r_loc_request_in[r_loc_results_r]
            
                 #### DEFINITION TO CHECK IF ITEM IS IN DICTIONARY####################
                 def checkKey(dict, key):
@@ -256,85 +257,87 @@ while True:
 
 
                 #####################################################################
-                tokenBool = checkKey(R00_result, 'next_page_token')
+                r_loc_tokenBool = checkKey(r_loc_request_in, 'next_page_token')
                 #print('>NEXT PAGE TOKEN? : %s\n' % (tokenBool))
-                if tokenBool == True:
+                if r_loc_tokenBool == True:
                     #print(">>TOKEN!")
-                    tempTokenBool = tokenBool
-                    tempToken = R00_result['next_page_token']
+                    r_loc_tempTokenBool = r_loc_tokenBool
+                    r_loc_tempToken = r_loc_request_in['next_page_token']
                     #print('>>Token Reference: %s' % (tempToken))
 
-                    while tempTokenBool == True:
-                        #print('\nMORE RESULTS!\nGoing to sleep')
+                    # When the results come in more than one page, the following runs a loop that would go over all of them..
+                    while r_loc_tempTokenBool == True:
+                        # Pausing the requests so the API doesnt freakout
                         time.sleep(2)
-                        #print('>Wake up!')
-                        R0X_parameters={}
-                        R0X_parameters.update(R00_parameters)#R00_parameters
-                        R0X_parameters.update({'pagetoken':tempToken})
+                        
+                        # Defining the parameters again, since they change wheather they are part of a page or not
+                        r_loc_params_token={}
+                        r_loc_params_token.update(r_loc_parameters)#R00_parameters
+                        r_loc_params_token.update({'pagetoken':r_loc_tempToken})
+                        # Making a request per page
+                        r_loc_request_token = requests.get(GOOGLE_API_SEARCH, params=r_loc_params_token)
+                        r_loc_results_in_token = r_loc_request_token.json()
+                        # Storing everything in the main results list.
+                        r_loc_results_raw.extend(r_loc_request_in[r_loc_results_r])
+                        
+                        # Check if there is another tempToken, so if there is another page
+                        r_loc_tempTokenBool = checkKey(r_loc_results_in_token, 'next_page_token')
+                        if r_loc_tempTokenBool == True:
+                            r_loc_tempToken = r_loc_results_in_token['next_page_token']
 
-
-                        R0X_request = requests.get(GOOGLE_API_SEARCH, params=R0X_parameters)
-                        R0X_result = R0X_request.json()
-                        #print('>>RESULT X: %s' % (R0X_result))
-                        #print('>>RESULT LIST LENGTH: %s' % (len(R00_result[GAPIRESULTS])))
-                        R99_results.extend(R00_result[GAPIRESULTS])
-                        #print('>>R99_results LENGHT: %s' % (len(R99_results)))
-                        # Check if there is another tempToken
-                        tempTokenBool = checkKey(R0X_result, 'next_page_token')
-                        if tempTokenBool == True:
-                            tempToken = R0X_result['next_page_token']
 
                 # CREATE AN ADDITIONAL REQUEST TO GET TO KNOW MORE DETAILS ABOUT THE PLACE ###########################
                 
-                placeDet_List_hours=[]
+                r_placeDet_List_hours=[]
 
-                for result in R99_results:
+                for result in r_loc_results_raw:
                     #Cooking the request to Place Details by place Id input
                     tempID= result['place_id']
-                    placeDet_params = {
+                    r_placeDet_params = {
                         'place_id': tempID,
                         'key': GOOGLE_API_KEY
                     }
-                    r_placeDet=requests.get(GOOGLE_PLACES_DET,params=placeDet_params)
-                    placeDet_res = r_placeDet.json()
+                    r_placeDet=requests.get(GOOGLE_PLACES_DET,params=r_placeDet_params)
+                    r_placeDet_res = r_placeDet.json()
 
 
                 # RESULTING DATA PER PAGE IS FORMATED IN A DICTIONARY ENTRY ###########################################
-                for i, item in enumerate(R99_results):
+                for i, item in enumerate(r_loc_results_raw):
                     #print('>%s>>>%s' % (i, item['name']))
-                    tempLocation = '%s,%s' % (
+                    r_loc_tempLocation = '%s,%s' % (
                         item['geometry']['location']['lng'], item['geometry']['location']['lat'])
                     # Building Data Tree
                     dataEntry = {
                         'name': item['name'],
-                        'location': tempLocation,
+                        'location': r_loc_tempLocation,
                         'lat':item['geometry']['location']['lat'],
                         'lng':item['geometry']['location']['lng'],
                         'types': item['types'],
                         'icon': item['icon'],
-                        'search':R00_keyword[k]
+                        'search':r_loc_keywords[k]
                         #'vicinity': item['vicinity']
                     }
-                    finalList.append(dataEntry)
-                    finalListDups.append(tempLocation)
+                    r_loc_finalList.append(dataEntry)
+                    r_loc_finalListDups.append(r_loc_tempLocation)
 
-                progPercent=round(k/len(R00_keyword)*100,2)
+                progPercent=round(k/len(r_loc_keywords)*100,2)
                 print('> %s %% COMPLETE' % progPercent, end='\r')
                     # finalDic.add(dataEntry)
             print ('> 100% DONE!!                           ')
           
+            # Culling all duplicates within the final list. This shit happens when the keyword search for the same thing.    
+            loc_finalList4real=[]
+            for i, item in enumerate(r_loc_finalListDups):
+                if item not in r_loc_final4dupsTestLis:
+                    r_loc_final4dupsTestLis.append(item)
+                    loc_finalList4real.append(r_loc_finalList[i])
 
-            finalList4real=[]
-            for i, item in enumerate(finalListDups):
-                if item not in final4dupsTestLis:
-                    final4dupsTestLis.append(item)
-                    finalList4real.append(finalList[i])
-
-            finalDic = dict(enumerate(finalList4real))   
-            finalData = finalDic
+            # Final of the final of the final.... just ready to get a nice wrap in the form of a JSON file.
+            loc_finalDic = dict(enumerate(loc_finalList4real))   
+            loc_finalData = loc_finalDic
 
             # SAVE DATA OF THE LOCATIONS ##############################################################
-            basePathXport=intin_FolderDirectory
+            basePathXport=i_input_FolderDirectory
             # 1. Save Json File for Checking
 
             # 2. Save Final File
@@ -345,8 +348,8 @@ while True:
                 os.makedirs(newpath)
 
             # 2.b Create the final file
-            dumps_finalData = json.dumps(finalData)
-            fout_finalData = open("%s/%s_locations_%s.json" %(newpath, dateToday_format, nameAppendix), "w")
+            dumps_finalData = json.dumps(loc_finalData)
+            fout_finalData = open("%s/%s_locations_%s.json" %(newpath, dateToday_format, f_finalNameAppendix), "w")
             #fout_finalData= open("%s/%s_Steps_dist.json" %(newpath,dateToday_format2),"w")
             fout_finalData.write(dumps_finalData)
             print('> DATA SAVED!\n')
@@ -361,49 +364,49 @@ while True:
             # INPUT DATA ############################################################
             
             # Origin Points (list) ##########################
-            inputListOrigin=[]
-            listOr=[]
+            route_inputListOrigin=[]
+            route_listOr=[]
             ## This loop gets the points retrieved from the google locations search
-            for i,item in enumerate(finalData):
-                listOr.append('%s,%s' %(finalData[i]['lat'],finalData[i]['lng']))
+            for i,item in enumerate(loc_finalData):
+                route_listOr.append('%s,%s' %(loc_finalData[i]['lat'],loc_finalData[i]['lng']))
 
-            inputListOrigin=listOr
+            route_inputListOrigin=route_listOr
 
             # Destination Points (list) #####################
-            inputDestination_UCBSite= intin_location
-            inputListDestination=[]
-            inputListDestination.append(inputDestination_UCBSite)
-            print ('> There are %s routes to be analyzed' %(len(inputListDestination)) )
+            route_inputDestination_SiteLocation= i_input_location
+            route_inputListDestination=[]
+            route_inputListDestination.append(route_inputDestination_SiteLocation)
+            print ('> There are %s routes to be analyzed' %(len(route_inputListDestination)) )
 
             # Mode of Transportation ########################
-            inputMode= ['walking','driving','bicycling','transit']
+            r_route_inputMode= ['walking','driving','bicycling','transit']
 
             ## Set default value for inputModeSel
-            inputModeSel = 'walking'
+            r_route_inputMode_selection = 'walking'
 
-            ## Check if intin_Mode exists and is in inputMode
+            ## Check if i_input_Mode exists and is in inputMode
             try:
-                intin_Mode
+                i_input_Mode
             except NameError:
-                print("> intin_Mode is not defined")
+                print("> i_input_Mode is not defined")
             else:
-                if intin_Mode in inputMode:
-                    inputModeSel = intin_Mode
-                    print(f"> Travel Mode is set to... {inputModeSel} !")
+                if i_input_Mode in r_route_inputMode:
+                    r_route_inputMode_selection = i_input_Mode
+                    print(f"> Travel Mode is set to... {r_route_inputMode_selection} !")
                 else:
                     print(
-                        f"> The value of intin_Mode is not in the inputMode list, inputModeSel remains as {inputModeSel}")
+                        f"> The value of i_input_Mode is not in the inputMode list, inputModeSel remains as {r_route_inputMode_selection}")
 
 
             ## LOOP FOR ORIGINS ######################################################
-            nameAppendixRoutes='Route_%s_%s'%(nAb,inputModeSel) #This is used for naming the file that will be saved
+            nameAppendixRoutes='Route_%s_%s'%(f_appendix_keywords,r_route_inputMode_selection) #This is used for naming the file that will be saved
             finalDataRoute={} # This the final Dic that will be saved as a JSON file.
 
             print('\n> INITIATE ROUTE ANALYSIS: \n')
-            for e in range(len(inputListDestination)):
+            for e in range(len(route_inputListDestination)):
                 progPercentTempList=[]
                 #sleep(random.randint(1, 4)) ... this was used as a way to give time between requests and to not make the API to freakout!
-                for i in range(len(inputListOrigin)):
+                for i in range(len(route_inputListOrigin)):
                     #sleep(random.randint(1, 5))
                     #print('########################################################################################################################################################################################################')
                     #print('## %s / LOOP INPUT DESTINATION %s/%s of ORIGIN %s/%s)' % ((len(inputListDestination)*e)+i,e,len(inputListDestination)-1,i,(len(inputListOrigin)-1)))
@@ -412,9 +415,9 @@ while True:
 
                     ## PARAMETERS PER REQUEST TYPE ###########################################
                     params_dir = {
-                        'origin': inputListOrigin[i],
-                        'destination': inputListDestination[e],
-                        'mode':inputModeSel,
+                        'origin': route_inputListOrigin[i],
+                        'destination': route_inputListDestination[e],
+                        'mode':r_route_inputMode_selection,
                         'key':GOOGLE_API_KEY
                     }
 
@@ -509,15 +512,11 @@ while True:
                     nameEntry=str(e+i)
                     finalDataRoute.update({nameEntry : data_route})
 
-                    
-
-
-
                     ##SAVE DATA #######################################################
                     #print('########################################################################################################################################################################################################')
                     #print('## SAVE DATA')
                     #print('########################################################################################################################################################################################################')
-                    basePathXport=intin_FolderDirectory
+                    basePathXport=i_input_FolderDirectory
                     #basePathXport='C:/Users/enolv/Dropbox/_eMiniProjects/210124_eRoutes/xprt'
                     # 1. Save Json File for Checking
 
@@ -537,7 +536,7 @@ while True:
                     #fout_finalDataRoute= open("%s/%s_Steps_dist.json" %(newpath,dateToday_format2),"w")
                     fout_finalDataRoute.write(dumps_finalDataRoute)
 
-                progPercent=round(i/len(inputListDestination)*100)
+                progPercent=round(i/len(route_inputListDestination)*100)
                 print('>%s %% COMPLETE' % progPercent, end='\r')
 
             print ('>100% DONE!!                  ')
