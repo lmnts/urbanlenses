@@ -166,9 +166,6 @@ while True:
     intin_FolderDirectory= values["-FOLDER-"] # the file directory where the json files will be saved
  
 
-
-
-
     #End program if user close window or presses the OK button
     if event=="CLOSE" or event ==sg.WIN_CLOSED:
         break
@@ -189,7 +186,7 @@ while True:
             # REQUEST TYPES ###
             GOOGLE_MAPS_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json'
             GOOGLE_MAPS_API_URL_DIR = 'https://maps.googleapis.com/maps/api/directions/json'
-            GOOGLE_PLACES_DET=''
+            GOOGLE_PLACES_DET='https://maps.googleapis.com/maps/api/place/details/json'
             GOOGLE_PLACES_API = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
             GOOGLE_PLACES_API2="https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
             GOOGLE_ELEVATION_API = 'https://maps.googleapis.com/maps/api/elevation/json'
