@@ -284,9 +284,22 @@ while True:
                         if tempTokenBool == True:
                             tempToken = R0X_result['next_page_token']
 
-                #print("\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n>>>>>> RESULT DATA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-                print('> Random Result Check: ')
-                print(R99_results[0])
+                # CREATE AN ADDITIONAL REQUEST TO GET TO KNOW MORE DETAILS ABOUT THE PLACE ###########################
+                
+                placeDet_List_hours=[]
+
+                for result in R99_results:
+                    #Cooking the request to Place Details by place Id input
+                    tempID= result['place_id']
+                    placeDet_params = {
+                        'place_id': tempID,
+                        'key': GOOGLE_API_KEY
+                    }
+                    r_placeDet=requests.get(GOOGLE_PLACES_DET,params=placeDet_params)
+                    placeDet_res = r_placeDet.json()
+
+
+                # RESULTING DATA PER PAGE IS FORMATED IN A DICTIONARY ENTRY ###########################################
                 for i, item in enumerate(R99_results):
                     #print('>%s>>>%s' % (i, item['name']))
                     tempLocation = '%s,%s' % (
