@@ -286,21 +286,33 @@ while True:
                             r_loc_tempToken = r_loc_results_in_token['next_page_token']
 
 
+                ######################################################################################################
                 # CREATE AN ADDITIONAL REQUEST TO GET TO KNOW MORE DETAILS ABOUT THE PLACE ###########################
-                
+                ######################################################################################################
+                print("\n>>>>>> GATHER LOCATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n")
+
+                r_placeDet_res_raw=[]
                 r_placeDet_List_hours=[]
+                r_placeDet_List_ratings=[]
+                r_placeDet_List_photo=[]
+                r_placeDet_List_address=[]
 
                 for result in r_loc_results_raw:
                     #Cooking the request to Place Details by place Id input
                     tempID= result['place_id']
+                    
                     r_placeDet_params = {
                         'place_id': tempID,
                         'key': GOOGLE_API_KEY
                     }
                     r_placeDet=requests.get(GOOGLE_PLACES_DET,params=r_placeDet_params)
                     r_placeDet_res = r_placeDet.json()
-
-
+                    r_placeDet_res_raw.append(r_placeDet_res)
+                    r_placeDet_List_hours.append(r_placeDet_res['result']['opening_hours']['periods'])
+                    r_placeDet_List_ratings.append(r_placeDet_res['result']['rating'])
+                    r_placeDet_List_photo.append(r_placeDet_res['result']['photos'][0]['html_attributions'])
+                    r_placeDet_List_address.append(r_placeDet_res['result']['formatted_address'])
+                
                 # RESULTING DATA PER PAGE IS FORMATED IN A DICTIONARY ENTRY ###########################################
                 for i, item in enumerate(r_loc_results_raw):
                     #print('>%s>>>%s' % (i, item['name']))
@@ -314,7 +326,11 @@ while True:
                         'lng':item['geometry']['location']['lng'],
                         'types': item['types'],
                         'icon': item['icon'],
-                        'search':r_loc_keywords[k]
+                        'search':r_loc_keywords[k],
+                        'hours':r_placeDet_List_hours[i],
+                        'photo':r_placeDet_List_photo[i],
+                        'address':r_placeDet_List_address[i],
+                        'rating':r_placeDet_List_ratings[i]
                         #'vicinity': item['vicinity']
                     }
                     r_loc_finalList.append(dataEntry)
@@ -404,15 +420,11 @@ while True:
 
             print('\n> INITIATE ROUTE ANALYSIS: \n')
             for e in range(len(route_inputListDestination)):
+                time.sleep(1)
                 progPercentTempList=[]
                 #sleep(random.randint(1, 4)) ... this was used as a way to give time between requests and to not make the API to freakout!
                 for i in range(len(route_inputListOrigin)):
-                    #sleep(random.randint(1, 5))
-                    #print('########################################################################################################################################################################################################')
-                    #print('## %s / LOOP INPUT DESTINATION %s/%s of ORIGIN %s/%s)' % ((len(inputListDestination)*e)+i,e,len(inputListDestination)-1,i,(len(inputListOrigin)-1)))
-                    #print('## ROUTE: %s > %s'%(inputListOrigin[i],inputListDestination[e]))
-                    #print('########################################################################################################################################################################################################')
-
+                    
                     ## PARAMETERS PER REQUEST TYPE ###########################################
                     params_dir = {
                         'origin': route_inputListOrigin[i],
