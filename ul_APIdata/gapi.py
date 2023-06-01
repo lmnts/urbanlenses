@@ -16,6 +16,10 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
 """
+
+
+
+
 # MAIN LIBRARIES ################################################################
 import requests
 import json
@@ -170,7 +174,9 @@ while True:
     if event=="CLOSE" or event ==sg.WIN_CLOSED:
         break
 
-    # RUN THE SCRIPT #    
+    #################################################################################################################################################################
+    ## RUN THE SCRIPT ###############################################################################################################################################
+    #################################################################################################################################################################    
     if event=="RUN SCRIPT":
         if 'i_input_Keywords_formated' not in globals() :
             sg.popup('You have forgotten to input Keywords for Search!')
@@ -180,10 +186,10 @@ while True:
             print('\n██╗     ███╗   ███╗███╗   ██╗████████╗███████╗    ██████╗  ██████╗ ██████╗ ██████╗ \n██║     ████╗ ████║████╗  ██║╚══██╔══╝██╔════╝    ╚════██╗██╔═████╗╚════██╗╚════██╗\n██║     ██╔████╔██║██╔██╗ ██║   ██║   ███████╗     █████╔╝██║██╔██║ █████╔╝ █████╔╝\n██║     ██║╚██╔╝██║██║╚██╗██║   ██║   ╚════██║    ██╔═══╝ ████╔╝██║██╔═══╝  ╚═══██╗\n███████╗██║ ╚═╝ ██║██║ ╚████║   ██║   ███████║    ███████╗╚██████╔╝███████╗██████╔╝\n╚══════╝╚═╝     ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝    ╚══════╝ ╚═════╝ ╚══════╝╚═════╝ \n')
 
             #########################################################################################################################################################
-            ## GOOGLE MAPS API REQUEST ############################################################################################################################################
+            ## GOOGLE MAPS API REQUEST ##############################################################################################################################
             #########################################################################################################################################################
 
-            # REQUEST TYPES ###############################################################################
+            # REQUEST TYPES #########################################################################################################################################
             GOOGLE_MAPS_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json'
             GOOGLE_MAPS_API_URL_DIR = 'https://maps.googleapis.com/maps/api/directions/json'
             GOOGLE_PLACES_DET='https://maps.googleapis.com/maps/api/place/details/json'
@@ -191,14 +197,14 @@ while True:
             GOOGLE_PLACES_API2="https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
             GOOGLE_ELEVATION_API = 'https://maps.googleapis.com/maps/api/elevation/json'
             
-            # API KEY #####################################################################################
+            # API KEY ###############################################################################################################################################
             # Reads the API key from an external file stored in the computer, when using the code, 'dirAPIkey' should be replaced
             with open(dirAPIkey, 'r') as file:
                 GOOGLE_API_KEY = file.read().strip()
             
             
             
-            # INPUT DATA ##################################################################################
+            # INPUT DATA ############################################################################################################################################
             print("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n>>>>>> GATHER LOCATIONS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
             # DEFINING PARAMETERS
             GOOGLE_API_SEARCH=GOOGLE_PLACES_API
@@ -230,9 +236,9 @@ while True:
 
             print('\n> INITIATE LOCATION GATHER: \n')
             for k in range(len(r_loc_keywords)):
-                #####################################################################
-                #### SEARCH KEYWORDS ################################################
-                #####################################################################
+                #####################################################################################################################################################
+                #### SEARCH KEYWORDS ################################################################################################################################
+                #####################################################################################################################################################
                 r_loc_parameters = {
                     'key': GOOGLE_API_KEY,
                     'location': r_loc_geolocation,
@@ -245,7 +251,7 @@ while True:
                
                 r_loc_results_raw = r_loc_request_in[r_loc_results_r]
            
-                #### DEFINITION TO CHECK IF ITEM IS IN DICTIONARY####################
+                #### DEFINITION TO CHECK IF ITEM IS IN DICTIONARY####################################################################################################
                 def checkKey(dict, key):
                     if key in dict.keys():
                         # print(">>Yep!")
@@ -256,7 +262,7 @@ while True:
                         return False
 
 
-                #####################################################################
+                #####################################################################################################################################################
                 r_loc_tokenBool = checkKey(r_loc_request_in, 'next_page_token')
                 #print('>NEXT PAGE TOKEN? : %s\n' % (tokenBool))
                 if r_loc_tokenBool == True:
@@ -286,9 +292,9 @@ while True:
                             r_loc_tempToken = r_loc_results_in_token['next_page_token']
 
 
-                ######################################################################################################
-                # CREATE AN ADDITIONAL REQUEST TO GET TO KNOW MORE DETAILS ABOUT THE PLACE ###########################
-                ######################################################################################################
+                #####################################################################################################################################################
+                # CREATE AN ADDITIONAL REQUEST TO GET TO KNOW MORE DETAILS ABOUT THE PLACE ##########################################################################
+                #####################################################################################################################################################
                 print("\n>>>>>> GATHER LOCATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n")
 
                 r_placeDet_res_raw=[]
@@ -309,12 +315,28 @@ while True:
                     r_placeDet_res = r_placeDet.json()
                     r_placeDet_res_raw.append(r_placeDet_res)
                     #print(r_placeDet_res_raw)
-                    #r_placeDet_List_hours.append(r_placeDet_res['result']['opening_hours']['periods'])
-                    r_placeDet_List_ratings.append(r_placeDet_res['result']['rating'])
-                    r_placeDet_List_photo.append(r_placeDet_res['result']['photos'][0]['html_attributions'])
-                    r_placeDet_List_address.append(r_placeDet_res['result']['formatted_address'])
+                    
+                    # I have experienced that the API results are instable and could break the code, this are statements that would allow to continue if the keys are not found:
+                    ## 'rating'
+                    if 'rating' in r_placeDet_res['result']:
+                        r_placeDet_List_ratings.append(r_placeDet_res['result']['rating'])
+                    else:
+                        r_placeDet_List_ratings.append('No key found')
 
-                    #This If statement checks if it is 'opening_hours' or 'current_opening_hours' in order to retrieve the right result
+                    ## 'photos' and 'html_attributions'
+                    if 'photos' in r_placeDet_res['result'] and len(r_placeDet_res['result']['photos']) > 0 and 'html_attributions' in r_placeDet_res['result']['photos'][0]:
+                        r_placeDet_List_photo.append(r_placeDet_res['result']['photos'][0]['html_attributions'])
+                    else:
+                        r_placeDet_List_photo.append('No key found')
+
+                    ## 'formatted_address'
+                    if 'formatted_address' in r_placeDet_res['result']:
+                        r_placeDet_List_address.append(r_placeDet_res['result']['formatted_address'])
+                    else:
+                        r_placeDet_List_address.append('No key found')
+
+                    ## 'opening_hours'
+                    ### This If statement checks if it is 'opening_hours' or 'current_opening_hours' in order to retrieve the right result
                     if 'opening_hours' in r_placeDet_res['result']:
                         r_placeDet_List_hours.append(r_placeDet_res['result']['opening_hours']['periods'])
                     elif 'current_opening_hours' in r_placeDet_res['result']:
@@ -322,7 +344,7 @@ while True:
                     else:
                         print("Neither 'opening_hours' nor 'current_opening_hours' found")
                 
-                # RESULTING DATA PER PAGE IS FORMATED IN A DICTIONARY ENTRY ###########################################
+                # RESULTING DATA PER PAGE IS FORMATED IN A DICTIONARY ENTRY #########################################################################################
                 for i, item in enumerate(r_loc_results_raw):
                     #print('>%s>>>%s' % (i, item['name']))
                     r_loc_tempLocation = '%s,%s' % (
@@ -361,7 +383,7 @@ while True:
             loc_finalDic = dict(enumerate(loc_finalList4real))   
             loc_finalData = loc_finalDic
 
-            # SAVE DATA OF THE LOCATIONS ##############################################################
+            # SAVE DATA OF THE LOCATIONS ############################################################################################################################
             basePathXport=i_input_FolderDirectory
             # 1. Save Json File for Checking
 
@@ -382,11 +404,11 @@ while True:
 
 
             #########################################################################################################################################################
-            ## GOOGLE MAPS ROUTES API REQUEST ########################################################################################################################
+            ## GOOGLE MAPS ROUTES API REQUEST #######################################################################################################################
             #########################################################################################################################################################
             print("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n>>>>>> GOOGLE ROUTES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
             
-            # INPUT DATA ############################################################
+            # INPUT DATA ############################################################################################################################################
             
             # Origin Points (list) ##########################
             route_inputListOrigin=[]
@@ -423,7 +445,7 @@ while True:
                         f"> The value of i_input_Mode is not in the inputMode list, inputModeSel remains as {r_route_inputMode_selection}")
 
 
-            ## LOOP FOR ORIGINS ######################################################
+            ## LOOP FOR ORIGINS #####################################################################################################################################
             nameAppendixRoutes='Route_%s_%s'%(f_appendix_keywords,r_route_inputMode_selection) #This is used for naming the file that will be saved
             finalDataRoute={} # This the final Dic that will be saved as a JSON file.
 
@@ -434,7 +456,7 @@ while True:
                 #sleep(random.randint(1, 4)) ... this was used as a way to give time between requests and to not make the API to freakout!
                 for i in range(len(route_inputListOrigin)):
                     
-                    ## PARAMETERS PER REQUEST TYPE ###########################################
+                    ## PARAMETERS PER REQUEST TYPE ##################################################################################################################
                     params_dir = {
                         'origin': route_inputListOrigin[i],
                         'destination': route_inputListDestination[e],
@@ -442,14 +464,14 @@ while True:
                         'key':GOOGLE_API_KEY
                     }
 
-                    ## FINAL REQUEST #######################################################
+                    ## FINAL REQUEST ################################################################################################################################
                     req = requests.get(GOOGLE_MAPS_API_URL_DIR, params=params_dir)
                     res = req.json()
                     ## Getting the Total Number of Results for this Request
                     res1= json.loads(req.text)
 
 
-                    ## DATA HANDLING #######################################################
+                    ## DATA HANDLING ################################################################################################################################
                     #Getting a Dictionary with all the geo-points in route
 
                     ## Getting General Details of the Route
@@ -533,10 +555,7 @@ while True:
                     nameEntry=str(e+i)
                     finalDataRoute.update({nameEntry : data_route})
 
-                    ##SAVE DATA #######################################################
-                    #print('########################################################################################################################################################################################################')
-                    #print('## SAVE DATA')
-                    #print('########################################################################################################################################################################################################')
+                    ##SAVE DATA #####################################################################################################################################
                     basePathXport=i_input_FolderDirectory
                     #basePathXport='C:/Users/enolv/Dropbox/_eMiniProjects/210124_eRoutes/xprt'
                     # 1. Save Json File for Checking
