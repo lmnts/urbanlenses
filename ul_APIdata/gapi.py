@@ -85,13 +85,14 @@ sg.theme('DarkTeal10')
 searchInputGeneric='Schools'
 searchRouteGeneric='walking'
 layout=[
-    [sg.Text('Loc2Route Beta v2.7\n',font=('Arial',32,'bold'))],
+    [sg.Text('urbanLense gMapAPI 3.0',font=('Arial',30,'bold'))],
+    [sg.Text('LMNts 2023\n',font=('Arial',10,'bold'))],
     [sg.Text("Save Folder"),
     sg.In("C:/Loc2Route",size=(25, 1), enable_events=True, key="-FOLDER-"),
     sg.FolderBrowse()],
 
     [sg.Text('\n\n'),],
-    [sg.Text('Select Location Parameters:',font=('Arial',10,'bold'))],
+    [sg.Text('Select Location Parameters:',font=('Apythonrial',10,'bold'))],
     [sg.Text('Enter Location (lat,lng)          '), sg.InputText('47.608658, -122.340574')],
     [sg.Text('Enter Radius (m)                  '), sg.InputText('150')],
     #[sg.Text('Enter Topic - File Name        '), sg.InputText('FoodAndBeverage...')],
@@ -337,13 +338,42 @@ while True:
 
                     ## 'opening_hours'
                     ### This If statement checks if it is 'opening_hours' or 'current_opening_hours' in order to retrieve the right result
+                    '''
                     if 'opening_hours' in r_placeDet_res['result']:
                         r_placeDet_List_hours.append(r_placeDet_res['result']['opening_hours']['periods'])
                     elif 'current_opening_hours' in r_placeDet_res['result']:
                         r_placeDet_List_hours.append(r_placeDet_res['result']['current_opening_hours']['periods'])
                     else:
                         print("Neither 'opening_hours' nor 'current_opening_hours' found")
-                
+                    '''
+                    # Initialize opening_days, start_hours, close_hours, and time_window as lists with default values
+                    opening_days = [False] * 7
+                    start_hours = [None] * 7
+                    close_hours = [None] * 7
+                    time_window = [None] * 7
+
+                    # 'opening_hours' and 'periods'
+                    if 'opening_hours' in r_placeDet_res['result'] and 'periods' in r_placeDet_res['result']['opening_hours']:
+                        # Assuming that 'periods' contains the opening hours info
+                        opening_hours = r_placeDet_res['result']['opening_hours']['periods']
+                        for day_info in opening_hours:
+                            day = day_info['open']['day']
+                            opening_days[day] = True
+                            # Assuming the time format is 'HHMM'
+                            start_hours[day] = int(day_info['open']['time'][:2])
+                            close_hours[day] = int(day_info['close']['time'][:2])
+                            time_window[day] = close_hours[day] - start_hours[day]
+                        r_placeDet_List_hours.append({
+                            'opening_days': opening_days,
+                            'start_hours': start_hours,
+                            'close_hours': close_hours,
+                            'time_window': time_window,
+                        })
+                    else:
+                        r_placeDet_List_hours.append('No key found')
+
+
+
                 # RESULTING DATA PER PAGE IS FORMATED IN A DICTIONARY ENTRY #########################################################################################
                 for i, item in enumerate(r_loc_results_raw):
                     #print('>%s>>>%s' % (i, item['name']))
