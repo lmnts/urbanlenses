@@ -337,32 +337,35 @@ while True:
                         r_placeDet_List_address.append('No key found')
 
                     ## 'opening_hours'
-                    ### This If statement checks if it is 'opening_hours' or 'current_opening_hours' in order to retrieve the right result
-                    '''
-                    if 'opening_hours' in r_placeDet_res['result']:
-                        r_placeDet_List_hours.append(r_placeDet_res['result']['opening_hours']['periods'])
-                    elif 'current_opening_hours' in r_placeDet_res['result']:
-                        r_placeDet_List_hours.append(r_placeDet_res['result']['current_opening_hours']['periods'])
-                    else:
-                        print("Neither 'opening_hours' nor 'current_opening_hours' found")
-                    '''
+
                     # Initialize opening_days, start_hours, close_hours, and time_window as lists with default values
                     opening_days = [False] * 7
                     start_hours = [None] * 7
                     close_hours = [None] * 7
                     time_window = [None] * 7
 
-                    # 'opening_hours' and 'periods'
+                    # Check if either 'opening_hours' or 'current_opening_hours' exists
                     if 'opening_hours' in r_placeDet_res['result'] and 'periods' in r_placeDet_res['result']['opening_hours']:
-                        # Assuming that 'periods' contains the opening hours info
                         opening_hours = r_placeDet_res['result']['opening_hours']['periods']
+                    elif 'current_opening_hours' in r_placeDet_res['result'] and 'periods' in r_placeDet_res['result']['current_opening_hours']:
+                        opening_hours = r_placeDet_res['result']['current_opening_hours']['periods']
+                    else:
+                        opening_hours = None
+
+                    # Process the opening_hours data
+                    if opening_hours is not None:
                         for day_info in opening_hours:
                             day = day_info['open']['day']
                             opening_days[day] = True
                             # Assuming the time format is 'HHMM'
                             start_hours[day] = int(day_info['open']['time'][:2])
-                            close_hours[day] = int(day_info['close']['time'][:2])
-                            time_window[day] = close_hours[day] - start_hours[day]
+                            if 'close' in day_info:
+                                close_hours[day] = int(day_info['close']['time'][:2])
+                                time_window[day] = close_hours[day] - start_hours[day]
+                            else: 
+                                # If there is no 'close' key, we assume the business is open 24 hours
+                                close_hours[day] = start_hours[day]  # open for 24 hours
+                                time_window[day] = 24  # open for 24 hours
                         r_placeDet_List_hours.append({
                             'opening_days': opening_days,
                             'start_hours': start_hours,
@@ -371,6 +374,8 @@ while True:
                         })
                     else:
                         r_placeDet_List_hours.append('No key found')
+
+
 
 
 
