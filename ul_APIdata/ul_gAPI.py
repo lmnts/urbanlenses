@@ -92,7 +92,7 @@ layout=[
     sg.FolderBrowse()],
 
     #Search for API key location
-    [sg.Text("API Key"),
+    [sg.Text("API Key     "),
     sg.In("C:/Loc2Route",size=(25, 1), enable_events=True, key="-FOLDER2-"),
     sg.FileBrowse()],
 
