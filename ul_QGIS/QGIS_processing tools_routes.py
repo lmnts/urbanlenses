@@ -20,14 +20,23 @@ def haversine(coord1, coord2):
     distance = R * c
     return distance * 3280.84  # convert kilometers to feet
 
-# Define file paths
-jFile01="C:/Loc2Route/230515_routes/230515_finalDataRoute_Route_Restaurant-Bar-Food-Brewery-Dining_toNFAB_walking.json"
-jFile02="C:/Loc2Route/230515_routes/230515_finalDataRoute_Route_CulturalCenter-Museum-ArtGallery-LectureHall_toNFAB_walking.json"
 
-# Create dictionary with file paths and their corresponding prefixes
-filepaths = {jFile01: 'prefix1', 
-             jFile02: 'prefix2'}
+###### DEFINE FILES ########################################################################################
 
+fRootLocation="C:/Loc2Route/230621_routes/"
+jFile01 = fRootLocation + "20230621_151033_finalDataRoute_Route_CulturalCenter-Museum-ArtGallery-LectureHall_walking.json"
+jFile02 = fRootLocation + "20230621_151033_finalDataRoute_Route_Theatre-Entertainment-Show-Cinema-ConcertHall-MusicVenue_walking.json"
+jFile03 = fRootLocation + "20230621_151033_finalDataRoute_Route_Hotels-Hostel-Resort-Lodging-B&B_walking.json"
+jFile04 = fRootLocation + "20230621_151033_finalDataRoute_Route_Restaurant-Bar-Food-Brewery-Dining_walking.json"
+jFile05 = fRootLocation + ""
+
+
+filepaths = {jFile01: 'cultural', 
+             jFile02: 'entertainment',
+             jFile03: 'Lodging',
+             jFile04: 'FoodAndBeverage'}  # replace with your file paths and desired prefixes
+
+# RUN THE SCRIPT ############################################################################################
 # Loop over each file path in the dictionary
 for filepath, prefix in filepaths.items():
     # Load JSON file
